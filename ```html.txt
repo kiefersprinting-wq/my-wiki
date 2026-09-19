@@ -1,95 +1,649 @@
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Friendship Question 💗</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyWiki</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #ffd6e7;
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8f9fa;
+            color: #202122;
         }
 
-        .box {
+        /* HEADER */
+        header {
             background: white;
-            padding: 45px;
-            border-radius: 25px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            width: 350px;
+            border-bottom: 1px solid #a2a9b1;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
-        h1 {
-            color: #ff4f91;
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 30px;
+            font-weight: bold;
+            white-space: nowrap;
         }
 
-        p {
-            color: #555;
-            font-size: 18px;
+        .logo span {
+            font-weight: normal;
         }
 
-        button {
-            border: none;
-            padding: 12px 25px;
-            margin: 10px;
-            border-radius: 20px;
+        .search {
+            display: flex;
+            flex: 1;
+            max-width: 650px;
+        }
+
+        .search input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #72777d;
             font-size: 16px;
+        }
+
+        .search button {
+            padding: 0 20px;
+            border: 1px solid #72777d;
+            background: #eaecf0;
             cursor: pointer;
         }
 
-        .yes {
-            background: #ff69a3;
-            color: white;
+        .search button:hover {
+            background: #d8dbe0;
         }
 
-        .no {
-            background: #eee;
-            color: #555;
+        /* LAYOUT */
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: auto;
         }
 
-        button:hover {
-            transform: scale(1.05);
+        /* SIDEBAR */
+        aside {
+            width: 240px;
+            padding: 30px 20px;
+            border-right: 1px solid #c8ccd1;
+            min-height: calc(100vh - 75px);
+            background: #f8f9fa;
         }
 
-        #message {
-            margin-top: 20px;
-            color: #ff4f91;
+        aside h3 {
+            font-size: 16px;
+            border-bottom: 1px solid #c8ccd1;
+            padding-bottom: 8px;
+        }
+
+        aside a {
+            display: block;
+            padding: 8px;
+            color: #3366cc;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        aside a:hover {
+            text-decoration: underline;
+        }
+
+        /* MAIN */
+        main {
+            flex: 1;
+            padding: 35px 50px;
+            max-width: 1000px;
+        }
+
+        h1 {
+            font-family: Georgia, serif;
+            font-size: 36px;
+            font-weight: normal;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-family: Georgia, serif;
+            font-weight: normal;
+            font-size: 26px;
+            border-bottom: 1px solid #c8ccd1;
+            padding-bottom: 5px;
+            margin-top: 35px;
+        }
+
+        p {
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .intro {
+            font-size: 18px;
+        }
+
+        .article {
+            display: none;
+        }
+
+        .article.active {
+            display: block;
+        }
+
+        .info-box {
+            float: right;
+            width: 280px;
+            margin: 0 0 20px 25px;
+            border: 1px solid #a2a9b1;
+            background: #f8f9fa;
+        }
+
+        .info-title {
+            background: #eaecf0;
+            text-align: center;
             font-weight: bold;
+            padding: 12px;
+            font-size: 20px;
+        }
+
+        .info-box img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+        }
+
+        .info-row {
+            padding: 9px;
+            border-top: 1px solid #c8ccd1;
+        }
+
+        .info-row strong {
+            display: inline-block;
+            width: 90px;
+        }
+
+        /* HOME CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .card {
+            border: 1px solid #a2a9b1;
+            background: white;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            background: #eaecf0;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #3366cc;
+        }
+
+        /* SEARCH RESULTS */
+        #results {
+            margin-top: 20px;
+        }
+
+        .result {
+            padding: 15px;
+            border-bottom: 1px solid #c8ccd1;
+            cursor: pointer;
+        }
+
+        .result:hover {
+            background: #eaecf0;
+        }
+
+        .result h3 {
+            color: #3366cc;
+            margin: 0 0 5px;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 60px;
+            border-top: 1px solid #c8ccd1;
+            padding: 25px;
+            text-align: center;
+            font-size: 13px;
+            color: #54595d;
+        }
+
+        /* MOBILE */
+        @media (max-width: 800px) {
+            header {
+                flex-wrap: wrap;
+            }
+
+            aside {
+                display: none;
+            }
+
+            main {
+                padding: 25px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .info-box {
+                float: none;
+                width: 100%;
+                margin: 20px 0;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<div class="box">
+<header>
+    <div class="logo">My<span>Wiki</span></div>
 
-    <h1>💗 Hello! 💗</h1>
+    <div class="search">
+        <input
+            id="searchInput"
+            type="text"
+            placeholder="Search MyWiki..."
+            onkeydown="if(event.key === 'Enter') searchWiki()"
+        >
+        <button onclick="searchWiki()">Search</button>
+    </div>
+</header>
 
-    <p id="question">Do you wanna be friends?</p>
+<div class="container">
 
-    <button class="yes" onclick="yesClicked()">Yes! 💕</button>
+    <aside>
+        <h3>Navigation</h3>
 
-    <button class="no" onclick="noClicked()">No</button>
+        <a onclick="showArticle('home')">Main Page</a>
+        <a onclick="showArticle('science')">Science</a>
+        <a onclick="showArticle('technology')">Technology</a>
+        <a onclick="showArticle('history')">History</a>
+        <a onclick="showArticle('animals')">Animals</a>
 
-    <p id="message"></p>
+        <h3>Categories</h3>
+
+        <a onclick="showArticle('science')">Science</a>
+        <a onclick="showArticle('technology')">Computers</a>
+        <a onclick="showArticle('history')">World History</a>
+        <a onclick="showArticle('animals')">Biology</a>
+    </aside>
+
+    <main>
+
+        <!-- HOME -->
+        <section id="home" class="article active">
+
+            <h1>Welcome to MyWiki</h1>
+
+            <p class="intro">
+                <b>MyWiki</b> is a simple encyclopedia website where you can
+                explore information about science, technology, history,
+                animals, and many other subjects.
+            </p>
+
+            <h2>Featured Articles</h2>
+
+            <div class="cards">
+
+                <div class="card" onclick="showArticle('science')">
+                    <h3>Science</h3>
+                    <p>
+                        Explore the natural world through physics,
+                        chemistry, biology, and astronomy.
+                    </p>
+                </div>
+
+                <div class="card" onclick="showArticle('technology')">
+                    <h3>Technology</h3>
+                    <p>
+                        Learn about computers, programming,
+                        artificial intelligence, and modern technology.
+                    </p>
+                </div>
+
+                <div class="card" onclick="showArticle('history')">
+                    <h3>History</h3>
+                    <p>
+                        Discover important events, civilizations,
+                        and people from the past.
+                    </p>
+                </div>
+
+                <div class="card" onclick="showArticle('animals')">
+                    <h3>Animals</h3>
+                    <p>
+                        Learn about animals, their habitats,
+                        behavior, and biology.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SCIENCE -->
+        <section id="science" class="article">
+
+            <div class="info-box">
+
+                <div class="info-title">Science</div>
+
+                <div class="info-row">
+                    <strong>Field:</strong> Natural world
+                </div>
+
+                <div class="info-row">
+                    <strong>Subjects:</strong> Physics, Chemistry, Biology
+                </div>
+
+                <div class="info-row">
+                    <strong>Method:</strong> Scientific method
+                </div>
+
+            </div>
+
+            <h1>Science</h1>
+
+            <p>
+                Science is a systematic way of studying the natural world
+                through observation, experimentation, measurement, and
+                reasoning.
+            </p>
+
+            <h2>Branches of Science</h2>
+
+            <p>
+                Major branches include physics, chemistry, biology,
+                astronomy, Earth science, and environmental science.
+            </p>
+
+            <h2>Scientific Method</h2>
+
+            <p>
+                Scientists commonly investigate questions by making
+                observations, developing hypotheses, conducting experiments,
+                analyzing evidence, and communicating their results.
+            </p>
+
+        </section>
+
+
+        <!-- TECHNOLOGY -->
+        <section id="technology" class="article">
+
+            <div class="info-box">
+
+                <div class="info-title">Technology</div>
+
+                <div class="info-row">
+                    <strong>Field:</strong> Engineering
+                </div>
+
+                <div class="info-row">
+                    <strong>Examples:</strong> Computers, phones, robots
+                </div>
+
+            </div>
+
+            <h1>Technology</h1>
+
+            <p>
+                Technology refers to tools, techniques, systems, and
+                processes created by people to solve problems and perform
+                tasks.
+            </p>
+
+            <h2>Computers</h2>
+
+            <p>
+                Computers are electronic machines that process information.
+                They can perform calculations, store data, communicate,
+                and run software.
+            </p>
+
+            <h2>Programming</h2>
+
+            <p>
+                Programming is the process of creating instructions that
+                computers can execute. Popular programming languages include
+                Python, JavaScript, Java, and C++.
+            </p>
+
+        </section>
+
+
+        <!-- HISTORY -->
+        <section id="history" class="article">
+
+            <h1>History</h1>
+
+            <p>
+                History is the study of past events, societies, cultures,
+                and human experiences.
+            </p>
+
+            <h2>Ancient Civilizations</h2>
+
+            <p>
+                Human civilizations developed in many regions, including
+                Mesopotamia, Egypt, China, India, Greece, and Rome.
+            </p>
+
+            <h2>Studying History</h2>
+
+            <p>
+                Historians use sources such as written records,
+                archaeological discoveries, artifacts, photographs,
+                and oral histories.
+            </p>
+
+        </section>
+
+
+        <!-- ANIMALS -->
+        <section id="animals" class="article">
+
+            <div class="info-box">
+
+                <div class="info-title">Animals</div>
+
+                <div class="info-row">
+                    <strong>Kingdom:</strong> Animalia
+                </div>
+
+                <div class="info-row">
+                    <strong>Examples:</strong> Dogs, cats, birds, fish
+                </div>
+
+            </div>
+
+            <h1>Animals</h1>
+
+            <p>
+                Animals are multicellular organisms that belong to the
+                biological kingdom Animalia.
+            </p>
+
+            <h2>Animal Groups</h2>
+
+            <p>
+                Animals include mammals, birds, reptiles, amphibians,
+                fish, insects, and many other groups.
+            </p>
+
+            <h2>Habitats</h2>
+
+            <p>
+                Animals live in many different environments, including
+                forests, oceans, deserts, grasslands, and freshwater
+                ecosystems.
+            </p>
+
+        </section>
+
+
+        <!-- SEARCH -->
+        <section id="searchPage" class="article">
+
+            <h1>Search Results</h1>
+
+            <div id="results"></div>
+
+        </section>
+
+
+        <footer>
+            MyWiki — A simple encyclopedia project
+        </footer>
+
+    </main>
 
 </div>
 
+
 <script>
-    function yesClicked() {
-        document.getElementById("message").innerHTML =
-            "Yay! We're friends! 🥰💗";
+
+    const articles = {
+
+        science: {
+            title: "Science",
+            description:
+                "Science is a systematic way of studying the natural world through observation, experimentation, measurement, and reasoning."
+        },
+
+        technology: {
+            title: "Technology",
+            description:
+                "Technology refers to tools, techniques, systems, and processes created by people to solve problems and perform tasks."
+        },
+
+        history: {
+            title: "History",
+            description:
+                "History is the study of past events, societies, cultures, and human experiences."
+        },
+
+        animals: {
+            title: "Animals",
+            description:
+                "Animals are multicellular organisms that belong to the biological kingdom Animalia."
+        }
+
+    };
+
+
+    function showArticle(id) {
+
+        const articlesOnPage =
+            document.querySelectorAll(".article");
+
+        articlesOnPage.forEach(article => {
+            article.classList.remove("active");
+        });
+
+        const selected =
+            document.getElementById(id);
+
+        if (selected) {
+            selected.classList.add("active");
+        }
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }
 
-    function noClicked() {
-        document.getElementById("question").innerHTML =
-            "Are you sure? 🥺";
 
-        document.getElementById("message").innerHTML =
-            "It's okay! 💗";
+    function searchWiki() {
+
+        const search =
+            document.getElementById("searchInput")
+            .value
+            .toLowerCase()
+            .trim();
+
+        if (search === "") {
+            showArticle("home");
+            return;
+        }
+
+        const results =
+            document.getElementById("results");
+
+        results.innerHTML = "";
+
+        let found = false;
+
+        for (const key in articles) {
+
+            const article = articles[key];
+
+            if (
+                article.title.toLowerCase().includes(search) ||
+                article.description.toLowerCase().includes(search)
+            ) {
+
+                found = true;
+
+                const result =
+                    document.createElement("div");
+
+                result.className = "result";
+
+                result.innerHTML = `
+                    <h3>${article.title}</h3>
+                    <p>${article.description}</p>
+                `;
+
+                result.onclick = () =>
+                    showArticle(key);
+
+                results.appendChild(result);
+            }
+        }
+
+        if (!found) {
+
+            results.innerHTML = `
+                <p>
+                    No articles found for
+                    <b>"${search}"</b>.
+                </p>
+            `;
+        }
+
+        showArticle("searchPage");
+    }
+
+</script>
+
+</body>
+</html>
 ```
+
+
+
