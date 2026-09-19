@@ -1,0 +1,95 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Friendship Question 💗</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffd6e7;
+            font-family: Arial, sans-serif;
+        }
+
+        .box {
+            background: white;
+            padding: 45px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            width: 350px;
+        }
+
+        h1 {
+            color: #ff4f91;
+        }
+
+        p {
+            color: #555;
+            font-size: 18px;
+        }
+
+        button {
+            border: none;
+            padding: 12px 25px;
+            margin: 10px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .yes {
+            background: #ff69a3;
+            color: white;
+        }
+
+        .no {
+            background: #eee;
+            color: #555;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        #message {
+            margin-top: 20px;
+            color: #ff4f91;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>💗 Hello! 💗</h1>
+
+    <p id="question">Do you wanna be friends?</p>
+
+    <button class="yes" onclick="yesClicked()">Yes! 💕</button>
+
+    <button class="no" onclick="noClicked()">No</button>
+
+    <p id="message"></p>
+
+</div>
+
+<script>
+    function yesClicked() {
+        document.getElementById("message").innerHTML =
+            "Yay! We're friends! 🥰💗";
+    }
+
+    function noClicked() {
+        document.getElementById("question").innerHTML =
+            "Are you sure? 🥺";
+
+        document.getElementById("message").innerHTML =
+            "It's okay! 💗";
+```
